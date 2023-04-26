@@ -1,0 +1,28 @@
+from sys import stdin
+input = stdin.readline
+
+N = int(input())
+numbers = list(map(int, input().split()))
+M = int(input())
+dp = [[-1 for _ in range(N)] for __ in range(N)]
+
+def find(x, y):
+    if x > y:
+        return 1
+    
+    if dp[x][y] != -1:
+        return dp[x][y]
+    
+    if numbers[x] == numbers[y]:
+        dp[x][y] = find(x+1, y-1)
+    else:
+        dp[x][y] = 0
+    
+    return dp[x][y]
+
+result = []
+for i in range(M):
+    x, y = map(int, input().split())
+    result.append(str(find(x-1, y-1)))
+    
+print("\n".join(result))
